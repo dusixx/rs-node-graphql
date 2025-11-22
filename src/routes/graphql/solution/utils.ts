@@ -2,6 +2,7 @@ import {
   GraphQLBoolean as Bool,
   GraphQLEnumType as Enum,
   GraphQLFloat as Float,
+  GraphQLInputObjectType as InputObjectType,
   GraphQLInt as Int,
   GraphQLList as List,
   GraphQLNonNull as NonNull,
@@ -10,7 +11,18 @@ import {
 } from 'graphql';
 import { UUIDType } from '../types/uuid.js';
 
-export { Bool, Enum, Float, Int, List, NonNull, ObjectType, StringType, UUIDType };
+export {
+  Bool,
+  Enum,
+  Float,
+  InputObjectType,
+  Int,
+  List,
+  NonNull,
+  ObjectType,
+  StringType,
+  UUIDType,
+};
 
 export const isObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj != null && typeof obj === 'object';
