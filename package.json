@@ -21,6 +21,7 @@
     "test-rule": "npm run build:ts && tap --timeout=0 \"test/routes/gql-rule.test.js\"",
     "test-loader": "npm run build:ts && tap --timeout=0 \"test/routes/gql-loader.test.js\"",
     "test-loader-prime": "npm run build:ts && tap --timeout=0 \"test/routes/gql-loader-prime.test.js\"",
+    "test": "npm run test-integrity && npm run test-queries && npm run test-mutations && npm run test-rule && npm run test-loader && npm run test-loader-prime",
     "start": "npm run build:ts && fastify start -l info dist/app.js",
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
