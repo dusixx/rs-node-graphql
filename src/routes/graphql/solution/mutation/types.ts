@@ -9,7 +9,7 @@ import {
 } from '../common/utils.js';
 import { MemberTypeId } from '../query/types.js';
 
-export const ChangePostInputType = new InputObjectType({
+export const ChangePostInputType = InputObjectType({
   name: 'ChangePostInput',
   fields: {
     title: { type: StringType },
@@ -17,7 +17,7 @@ export const ChangePostInputType = new InputObjectType({
   },
 });
 
-export const ChangeProfileInputType = new InputObjectType({
+export const ChangeProfileInputType = InputObjectType({
   name: 'ChangeProfileInput',
   fields: {
     isMale: { type: Bool },
@@ -26,7 +26,7 @@ export const ChangeProfileInputType = new InputObjectType({
   },
 });
 
-export const ChangeUserInputType = new InputObjectType({
+export const ChangeUserInputType = InputObjectType({
   name: 'ChangeUserInput',
   fields: {
     name: { type: StringType },
@@ -34,29 +34,29 @@ export const ChangeUserInputType = new InputObjectType({
   },
 });
 
-export const CreatePostInputType = new InputObjectType({
+export const CreatePostInputType = InputObjectType({
   name: 'CreatePostInput',
   fields: {
-    title: { type: new NonNull(StringType) },
-    content: { type: new NonNull(StringType) },
-    authorId: { type: new NonNull(UUIDType) },
+    title: { type: NonNull(StringType) },
+    content: { type: NonNull(StringType) },
+    authorId: { type: NonNull(UUIDType) },
   },
 });
 
-export const CreateProfileInputType = new InputObjectType({
+export const CreateProfileInputType = InputObjectType({
   name: 'CreateProfileInput',
   fields: {
-    isMale: { type: new NonNull(Bool) },
-    yearOfBirth: { type: new NonNull(Int) },
-    memberTypeId: { type: new NonNull(MemberTypeId) },
-    userId: { type: new NonNull(UUIDType) },
+    isMale: { type: NonNull(Bool) },
+    yearOfBirth: { type: NonNull(Int) },
+    memberTypeId: { type: NonNull(MemberTypeId) },
+    userId: { type: NonNull(UUIDType) },
   },
 });
 
-export const CreateUserInputType = new InputObjectType({
+export const CreateUserInputType = InputObjectType({
   name: 'CreateUserInput',
   fields: {
-    name: { type: new NonNull(StringType) },
-    balance: { type: new NonNull(Float) },
+    name: { type: NonNull(StringType) },
+    balance: { type: NonNull(Float) },
   },
 });

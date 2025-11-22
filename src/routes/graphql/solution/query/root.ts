@@ -4,11 +4,11 @@ import { FieldResolverContext, UserSubs } from '../common/types.js';
 import { hasOwnKeys, List, ObjectType } from '../common/utils.js';
 import { MemberType, MemberTypeId, PostType, ProfileType, UserType } from './types.js';
 
-export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
+export const RootQueryType = ObjectType<unknown, FieldResolverContext>({
   name: 'RootQueryType',
   fields: {
     memberTypes: {
-      type: new List(MemberType),
+      type: List(MemberType),
       resolve: async (_src, _args, { prisma }) => {
         return await prisma.memberType.findMany();
       },
@@ -21,7 +21,7 @@ export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
       },
     },
     users: {
-      type: new List(UserType),
+      type: List(UserType),
       resolve: async (_src, _ars, { prisma, loaders }, resolveInfo) => {
         const fields = parseResolveInfo(resolveInfo)?.fieldsByTypeName.User;
         const include: Partial<Record<keyof UserSubs, boolean>> = {};
@@ -44,7 +44,7 @@ export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
       },
     },
     posts: {
-      type: new List(PostType),
+      type: List(PostType),
       resolve: async (_srs, _args, { prisma }) => {
         return await prisma.post.findMany();
       },
@@ -57,7 +57,7 @@ export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
       },
     },
     profiles: {
-      type: new List(ProfileType),
+      type: List(ProfileType),
       resolve: async (_src, _args, { prisma }) => {
         return await prisma.profile.findMany();
       },

@@ -1,15 +1,49 @@
+import {
+  GraphQLEnumType,
+  GraphQLInputObjectType,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLNullableType,
+  GraphQLObjectType,
+  GraphQLType,
+} from 'graphql';
+
 export {
   GraphQLBoolean as Bool,
-  GraphQLEnumType as Enum,
   GraphQLFloat as Float,
-  GraphQLInputObjectType as InputObjectType,
+  GraphQLObjectType,
   GraphQLInt as Int,
-  GraphQLList as List,
-  GraphQLNonNull as NonNull,
-  GraphQLObjectType as ObjectType,
   GraphQLString as StringType,
 } from 'graphql';
 export { UUIDType } from '../../types/uuid.js';
+
+export const NonNull = <T extends GraphQLNullableType>(
+  ...args: ConstructorParameters<typeof GraphQLNonNull<T>>
+) => {
+  return new GraphQLNonNull<T>(...args);
+};
+
+export const Enum = (...args: ConstructorParameters<typeof GraphQLEnumType>) => {
+  return new GraphQLEnumType(...args);
+};
+
+export const InputObjectType = (
+  ...args: ConstructorParameters<typeof GraphQLInputObjectType>
+) => {
+  return new GraphQLInputObjectType(...args);
+};
+
+export const ObjectType = <T = unknown, U = unknown>(
+  ...args: ConstructorParameters<typeof GraphQLObjectType<T, U>>
+): GraphQLObjectType<T, U> => {
+  return new GraphQLObjectType<T, U>(...args);
+};
+
+export const List = <T extends GraphQLType>(
+  ...args: ConstructorParameters<typeof GraphQLList<T>>
+) => {
+  return new GraphQLList<T>(...args);
+};
 
 export const isObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj != null && typeof obj === 'object';

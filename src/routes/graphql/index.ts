@@ -32,7 +32,6 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
       if (errors.length > 0) {
         return { errors };
       }
-
       return graphql({
         schema,
         source: query,

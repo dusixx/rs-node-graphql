@@ -11,26 +11,26 @@ import {
   CreateUserInputType,
 } from './types.js';
 
-export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
+export const RootMutationType = ObjectType<unknown, FieldResolverContext>({
   name: 'RootMutationType',
   fields: {
     createUser: {
       type: UserType,
-      args: { dto: { type: new NonNull(CreateUserInputType) } },
+      args: { dto: { type: NonNull(CreateUserInputType) } },
       resolve: async (_src, { dto }: { dto: Prisma.UserCreateInput }, { prisma }) => {
         return await prisma.user.create({ data: dto });
       },
     },
     createProfile: {
       type: ProfileType,
-      args: { dto: { type: new NonNull(CreateProfileInputType) } },
+      args: { dto: { type: NonNull(CreateProfileInputType) } },
       resolve: async (_src, { dto }: { dto: Prisma.ProfileCreateInput }, { prisma }) => {
         return await prisma.profile.create({ data: dto });
       },
     },
     createPost: {
       type: PostType,
-      args: { dto: { type: new NonNull(CreatePostInputType) } },
+      args: { dto: { type: NonNull(CreatePostInputType) } },
       resolve: async (_src, { dto }: { dto: Prisma.PostCreateInput }, { prisma }) => {
         return await prisma.post.create({ data: dto });
       },
@@ -38,8 +38,8 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     changePost: {
       type: PostType,
       args: {
-        id: { type: new NonNull(UUIDType) },
-        dto: { type: new NonNull(ChangePostInputType) },
+        id: { type: NonNull(UUIDType) },
+        dto: { type: NonNull(ChangePostInputType) },
       },
       resolve: async (
         _src,
@@ -52,8 +52,8 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     changeProfile: {
       type: ProfileType,
       args: {
-        id: { type: new NonNull(UUIDType) },
-        dto: { type: new NonNull(ChangeProfileInputType) },
+        id: { type: NonNull(UUIDType) },
+        dto: { type: NonNull(ChangeProfileInputType) },
       },
       resolve: async (
         _src,
@@ -66,8 +66,8 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     changeUser: {
       type: UserType,
       args: {
-        id: { type: new NonNull(UUIDType) },
-        dto: { type: new NonNull(ChangeUserInputType) },
+        id: { type: NonNull(UUIDType) },
+        dto: { type: NonNull(ChangeUserInputType) },
       },
       resolve: async (
         _src,
@@ -80,7 +80,7 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     deleteUser: {
       type: StringType,
       args: {
-        id: { type: new NonNull(UUIDType) },
+        id: { type: NonNull(UUIDType) },
       },
       resolve: async (_src, { id }: { id: string }, { prisma }) => {
         await prisma.user.delete({ where: { id } });
@@ -90,7 +90,7 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     deletePost: {
       type: StringType,
       args: {
-        id: { type: new NonNull(UUIDType) },
+        id: { type: NonNull(UUIDType) },
       },
       resolve: async (_src, { id }: { id: string }, { prisma }) => {
         await prisma.post.delete({ where: { id } });
@@ -100,7 +100,7 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     deleteProfile: {
       type: StringType,
       args: {
-        id: { type: new NonNull(UUIDType) },
+        id: { type: NonNull(UUIDType) },
       },
       resolve: async (_src, { id }: { id: string }, { prisma }) => {
         await prisma.profile.delete({ where: { id } });
@@ -110,8 +110,8 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     subscribeTo: {
       type: StringType,
       args: {
-        userId: { type: new NonNull(UUIDType) },
-        authorId: { type: new NonNull(UUIDType) },
+        userId: { type: NonNull(UUIDType) },
+        authorId: { type: NonNull(UUIDType) },
       },
       resolve: async (
         _src,
@@ -128,8 +128,8 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     unsubscribeFrom: {
       type: StringType,
       args: {
-        userId: { type: new NonNull(UUIDType) },
-        authorId: { type: new NonNull(UUIDType) },
+        userId: { type: NonNull(UUIDType) },
+        authorId: { type: NonNull(UUIDType) },
       },
       resolve: async (
         _src,
