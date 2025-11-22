@@ -1,6 +1,7 @@
 import { parseResolveInfo } from 'graphql-parse-resolve-info';
+import { FieldResolverContext } from '../../index.js';
 import { UUIDType } from '../../types/uuid.js';
-import { FieldResolverContext, hasOwnKeys, List, ObjectType } from '../utils.js';
+import { hasOwnKeys, List, ObjectType } from '../utils.js';
 import {
   MemberType,
   MemberTypeId,

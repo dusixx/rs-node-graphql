@@ -1,16 +1,8 @@
 import { User } from '@prisma/client';
 import { MemberTypeId as MemberTypeEnum } from '../../../member-types/schemas.js';
+import { FieldResolverContext } from '../../index.js';
 import { UUIDType } from '../../types/uuid.js';
-import {
-  Bool,
-  Enum,
-  FieldResolverContext,
-  Float,
-  Int,
-  List,
-  ObjectType,
-  StringType,
-} from '../utils.js';
+import { Bool, Enum, Float, Int, List, ObjectType, StringType } from '../utils.js';
 
 export type UserSubs = {
   subscribedToUser?: { subscriberId: string }[];
