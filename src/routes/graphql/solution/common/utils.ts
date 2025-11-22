@@ -1,4 +1,4 @@
-import {
+export {
   GraphQLBoolean as Bool,
   GraphQLEnumType as Enum,
   GraphQLFloat as Float,
@@ -9,20 +9,7 @@ import {
   GraphQLObjectType as ObjectType,
   GraphQLString as StringType,
 } from 'graphql';
-import { UUIDType } from '../types/uuid.js';
-
-export {
-  Bool,
-  Enum,
-  Float,
-  InputObjectType,
-  Int,
-  List,
-  NonNull,
-  ObjectType,
-  StringType,
-  UUIDType,
-};
+export { UUIDType } from '../../types/uuid.js';
 
 export const isObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj != null && typeof obj === 'object';

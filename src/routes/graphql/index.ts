@@ -1,18 +1,12 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
-import { PrismaClient } from '@prisma/client';
 import { graphql, GraphQLSchema, parse, validate } from 'graphql';
 import depthLimit from 'graphql-depth-limit';
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
-import { getLoaders } from './solution/loaders.js';
 import { RootMutationType } from './solution/mutation/root.js';
+import { getLoaders } from './solution/query/loaders.js';
 import { RootQueryType } from './solution/query/root.js';
 
 const DEPTH_LIMIT = 5;
-
-export type FieldResolverContext = {
-  prisma: PrismaClient;
-  loaders: ReturnType<typeof getLoaders>;
-};
 
 export const schema = new GraphQLSchema({
   query: RootQueryType,

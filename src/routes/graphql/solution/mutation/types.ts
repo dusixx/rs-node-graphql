@@ -1,4 +1,3 @@
-import { MemberTypeId } from '../query/types.js';
 import {
   Bool,
   Float,
@@ -7,7 +6,8 @@ import {
   NonNull,
   StringType,
   UUIDType,
-} from '../utils.js';
+} from '../common/utils.js';
+import { MemberTypeId } from '../query/types.js';
 
 export const ChangePostInputType = new InputObjectType({
   name: 'ChangePostInput',

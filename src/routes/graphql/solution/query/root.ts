@@ -1,23 +1,16 @@
 import { parseResolveInfo } from 'graphql-parse-resolve-info';
-import { FieldResolverContext } from '../../index.js';
 import { UUIDType } from '../../types/uuid.js';
-import { hasOwnKeys, List, ObjectType } from '../utils.js';
-import {
-  MemberType,
-  MemberTypeId,
-  PostType,
-  ProfileType,
-  UserSubs,
-  UserType,
-} from './types.js';
+import { FieldResolverContext, UserSubs } from '../common/types.js';
+import { hasOwnKeys, List, ObjectType } from '../common/utils.js';
+import { MemberType, MemberTypeId, PostType, ProfileType, UserType } from './types.js';
 
 export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
   name: 'RootQueryType',
   fields: {
     memberTypes: {
       type: new List(MemberType),
-      resolve: (_src, _args, { prisma }) => {
-        return prisma.memberType.findMany();
+      resolve: async (_src, _args, { prisma }) => {
+        return await prisma.memberType.findMany();
       },
     },
     memberType: {
@@ -40,7 +33,6 @@ export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
         users.forEach((user) => {
           loaders.users.prime(user.id, user);
         });
-
         return users;
       },
     },
@@ -48,13 +40,13 @@ export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
       type: UserType,
       args: { id: { type: UUIDType } },
       resolve: async (_srs, { id }: { id: string }, { loaders }) => {
-        return loaders.users.load(id);
+        return await loaders.users.load(id);
       },
     },
     posts: {
       type: new List(PostType),
-      resolve: (_srs, _args, { prisma }) => {
-        return prisma.post.findMany();
+      resolve: async (_srs, _args, { prisma }) => {
+        return await prisma.post.findMany();
       },
     },
     post: {
@@ -66,15 +58,15 @@ export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
     },
     profiles: {
       type: new List(ProfileType),
-      resolve: (_src, _args, { prisma }) => {
-        return prisma.profile.findMany();
+      resolve: async (_src, _args, { prisma }) => {
+        return await prisma.profile.findMany();
       },
     },
     profile: {
       type: ProfileType,
       args: { id: { type: UUIDType } },
       resolve: async (_src, { id }: { id: string }, { prisma }) => {
-        return prisma.profile.findUnique({ where: { id } });
+        return await prisma.profile.findUnique({ where: { id } });
       },
     },
   },

@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
-import { FieldResolverContext } from '../../index.js';
+import { FieldResolverContext } from '../common/types.js';
+import { NonNull, ObjectType, StringType, UUIDType } from '../common/utils.js';
 import { PostType, ProfileType, UserType } from '../query/types.js';
-import { NonNull, ObjectType, StringType, UUIDType } from '../utils.js';
 import {
   ChangePostInputType,
   ChangeProfileInputType,
@@ -17,15 +17,15 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
     createUser: {
       type: UserType,
       args: { dto: { type: new NonNull(CreateUserInputType) } },
-      resolve: (_src, { dto }: { dto: Prisma.UserCreateInput }, { prisma }) => {
-        return prisma.user.create({ data: dto });
+      resolve: async (_src, { dto }: { dto: Prisma.UserCreateInput }, { prisma }) => {
+        return await prisma.user.create({ data: dto });
       },
     },
     createProfile: {
       type: ProfileType,
       args: { dto: { type: new NonNull(CreateProfileInputType) } },
-      resolve: (_src, { dto }: { dto: Prisma.ProfileCreateInput }, { prisma }) => {
-        return prisma.profile.create({ data: dto });
+      resolve: async (_src, { dto }: { dto: Prisma.ProfileCreateInput }, { prisma }) => {
+        return await prisma.profile.create({ data: dto });
       },
     },
     createPost: {
@@ -55,12 +55,12 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
         id: { type: new NonNull(UUIDType) },
         dto: { type: new NonNull(ChangeProfileInputType) },
       },
-      resolve: (
+      resolve: async (
         _src,
         { id, dto }: { id: string; dto: Prisma.ProfileUpdateInput },
         { prisma },
       ) => {
-        return prisma.profile.update({ where: { id }, data: dto });
+        return await prisma.profile.update({ where: { id }, data: dto });
       },
     },
     changeUser: {
@@ -69,12 +69,12 @@ export const RootMutationType = new ObjectType<unknown, FieldResolverContext>({
         id: { type: new NonNull(UUIDType) },
         dto: { type: new NonNull(ChangeUserInputType) },
       },
-      resolve: (
+      resolve: async (
         _src,
         { id, dto }: { id: string; dto: Prisma.UserUpdateInput },
         { prisma },
       ) => {
-        return prisma.user.update({ where: { id }, data: dto });
+        return await prisma.user.update({ where: { id }, data: dto });
       },
     },
     deleteUser: {

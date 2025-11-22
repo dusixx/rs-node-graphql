@@ -33,3 +33,14 @@ type User {
   userSubscribedTo: [User!]!
   subscribedToUser: [User!]!
 }
+
+type RootQueryType {
+  memberTypes: [MemberType!]!
+  memberType(id: MemberTypeId!): MemberType
+  users: [User!]!
+  user(id: UUID!): User
+  posts: [Post!]!
+  post(id: UUID!): Post
+  profiles: [Profile!]!
+  profile(id: UUID!): Profile
+}

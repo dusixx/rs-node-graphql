@@ -1,15 +1,7 @@
-import { User } from '@prisma/client';
 import { MemberTypeId as MemberTypeEnum } from '../../../member-types/schemas.js';
-import { FieldResolverContext } from '../../index.js';
 import { UUIDType } from '../../types/uuid.js';
-import { Bool, Enum, Float, Int, List, ObjectType, StringType } from '../utils.js';
-
-export type UserSubs = {
-  subscribedToUser?: { subscriberId: string }[];
-  userSubscribedTo?: { authorId: string }[];
-};
-
-type UserWithSubs = User & UserSubs;
+import { FieldResolverContext, UserWithSubs } from '../common/types.js';
+import { Bool, Enum, Float, Int, List, ObjectType, StringType } from '../common/utils.js';
 
 export const MemberTypeId = new Enum({
   name: 'MemberTypeId',
@@ -46,8 +38,8 @@ export const ProfileType = new ObjectType<{ memberTypeId: string }, FieldResolve
       yearOfBirth: { type: Int },
       memberType: {
         type: MemberType,
-        resolve: ({ memberTypeId }, _args, { loaders }) => {
-          return loaders.memberTypes.load(memberTypeId);
+        resolve: async ({ memberTypeId }, _args, { loaders }) => {
+          return await loaders.memberTypes.load(memberTypeId);
         },
       },
     },
@@ -62,26 +54,30 @@ export const UserType: ObjectType = new ObjectType<UserWithSubs, FieldResolverCo
     balance: { type: Float },
     profile: {
       type: ProfileType,
-      resolve: ({ id }, _args, { loaders }) => {
-        return loaders.userProfiles.load(id);
+      resolve: async ({ id }, _args, { loaders }) => {
+        return await loaders.userProfiles.load(id);
       },
     },
     posts: {
       type: new List(PostType),
-      resolve: ({ id }, _args, { loaders }) => {
-        return loaders.userPosts.load(id);
+      resolve: async ({ id }, _args, { loaders }) => {
+        return await loaders.userPosts.load(id);
       },
     },
     userSubscribedTo: {
       type: new List(UserType),
-      resolve: ({ userSubscribedTo }, _args, { loaders }) => {
-        return loaders.users.loadMany(userSubscribedTo?.map((s) => s.authorId) ?? []);
+      resolve: async ({ userSubscribedTo }, _args, { loaders }) => {
+        return await loaders.users.loadMany(
+          userSubscribedTo?.map((s) => s.authorId) ?? [],
+        );
       },
     },
     subscribedToUser: {
       type: new List(UserType),
-      resolve: ({ subscribedToUser }, _args, { loaders }) => {
-        return loaders.users.loadMany(subscribedToUser?.map((s) => s.subscriberId) ?? []);
+      resolve: async ({ subscribedToUser }, _args, { loaders }) => {
+        return await loaders.users.loadMany(
+          subscribedToUser?.map((s) => s.subscriberId) ?? [],
+        );
       },
     },
   }),
