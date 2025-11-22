@@ -1,8 +1,17 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
-import { graphql, GraphQLSchema } from 'graphql';
-import { QueryType } from './query/query.js';
+import { PrismaClient } from '@prisma/client';
+import { graphql, GraphQLSchema, parse, validate } from 'graphql';
+import depthLimit from 'graphql-depth-limit';
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
-import { GraphQLContext } from './types/context.js';
+import { getLoaders } from './solution/loaders.js';
+import { RootQueryType } from './solution/query/root.js';
+
+const DEPTH_LIMIT = 5;
+
+export type FieldResolverContext = {
+  prisma: PrismaClient;
+  loaders: ReturnType<typeof getLoaders>;
+};
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
@@ -16,21 +25,33 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         200: gqlResponseSchema,
       },
     },
-    async handler(req) {
+    async handler({ body }) {
+      const { query, variables } = body;
+
+      const errors = validate(schema, parse(query), [depthLimit(DEPTH_LIMIT)]);
+      if (errors.length > 0) {
+        return { errors };
+      }
+
       return graphql({
         schema,
-        source: req.body.query,
+        source: query,
         contextValue: {
           prisma,
-        } as GraphQLContext,
-        variableValues: req.body.variables,
+          loaders: getLoaders(prisma),
+        },
+        variableValues: variables,
       });
     },
   });
 };
 
+// schema {
+//   query: RootQueryType
+//   mutation: Mutations
+// }
 export const schema = new GraphQLSchema({
-  query: QueryType,
+  query: RootQueryType,
   // mutation,
 });
 
