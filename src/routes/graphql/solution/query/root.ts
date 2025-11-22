@@ -30,8 +30,7 @@ export const RootQueryType = new ObjectType<unknown, FieldResolverContext>({
     users: {
       type: new List(UserType),
       resolve: async (_src, _ars, { prisma, loaders }, resolveInfo) => {
-        const parsedInfo = parseResolveInfo(resolveInfo);
-        const fields = parsedInfo?.fieldsByTypeName.User;
+        const fields = parseResolveInfo(resolveInfo)?.fieldsByTypeName.User;
         const include: Partial<Record<keyof UserSubs, boolean>> = {};
 
         include.userSubscribedTo = hasOwnKeys<UserSubs>(fields, 'userSubscribedTo');

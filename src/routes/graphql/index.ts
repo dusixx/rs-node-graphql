@@ -4,6 +4,7 @@ import { graphql, GraphQLSchema, parse, validate } from 'graphql';
 import depthLimit from 'graphql-depth-limit';
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
 import { getLoaders } from './solution/loaders.js';
+import { RootMutationType } from './solution/mutation/root.js';
 import { RootQueryType } from './solution/query/root.js';
 
 const DEPTH_LIMIT = 5;
@@ -12,6 +13,11 @@ export type FieldResolverContext = {
   prisma: PrismaClient;
   loaders: ReturnType<typeof getLoaders>;
 };
+
+export const schema = new GraphQLSchema({
+  query: RootQueryType,
+  mutation: RootMutationType,
+});
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
@@ -45,14 +51,5 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
     },
   });
 };
-
-// schema {
-//   query: RootQueryType
-//   mutation: Mutations
-// }
-export const schema = new GraphQLSchema({
-  query: RootQueryType,
-  // mutation,
-});
 
 export default plugin;
