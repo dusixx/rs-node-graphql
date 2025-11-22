@@ -38,7 +38,7 @@ export const CreatePostInputType = new InputObjectType({
   name: 'CreatePostInput',
   fields: {
     title: { type: new NonNull(StringType) },
-    content: { type: new NonNull(Float) },
+    content: { type: new NonNull(StringType) },
     authorId: { type: new NonNull(UUIDType) },
   },
 });
