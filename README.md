@@ -7,6 +7,8 @@ git checkout dev
 npm ci
 ```
 
+## ⚙️ Setup
+
 ```sh
 # Create .env file from .env.example
 cp .env.example .env
