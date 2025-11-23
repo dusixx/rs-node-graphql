@@ -10,8 +10,10 @@ npm ci
 ```sh
 # Create .env file from .env.example
 cp .env.example .env
+
 # Apply db migrations
 npx prisma migrate deploy
+
 # Seed db
 npx prisma db seed
 ```
@@ -24,10 +26,10 @@ npm test
 ```
 
 ```sh
-# Run tests one by one
-
 # Ensure critical files remain unchanged
 npm run test-integrity
+
+# Run tests one by one
 npm run test-queries
 npm run test-mutations
 npm run test-rule
