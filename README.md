@@ -23,7 +23,7 @@ npx prisma db seed
 ## 🧪 Run tests
 
 ```sh
-# Run all tests at once
+# Run all tests at once (including test-integrity)
 npm test
 ```
 
