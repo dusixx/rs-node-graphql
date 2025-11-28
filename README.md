@@ -23,11 +23,6 @@ npx prisma db seed
 ## 🧪 Run tests
 
 ```sh
-# Run all tests at once (including test-integrity)
-npm test
-```
-
-```sh
 # Ensure critical files remain unchanged
 npm run test-integrity
 
